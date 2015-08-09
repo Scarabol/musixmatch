@@ -20,8 +20,8 @@ select_button = nil
 function descriptor()
   return {
     title = "musiXmatch";
-    version = "0.04";
-    author = "aoeu";
+    version = "0.05";
+    author = "aoeu, Scarabol";
     description = "<center><b>musiXmatch</b></center>"
     .. "Automatically fetch lyrics of songs from <a href='http://musiXmatch.com'>musiXmatch.com</a>";
     shortdesc = "Automatically fetch the lyrics of songs from musiXmatch.com";
@@ -139,7 +139,7 @@ end
 function show_chooser()
   get_info()
   get_id()
-  if table.getn(track_ids) == 1 then
+  if #track_ids == 1 then
     track_id = 1
     artist = track_artists[track_id]
     title = track_names[track_id]
@@ -163,13 +163,13 @@ end
 
 function populate_list()
   if not no_tracks then
-    for i=1,table.getn(track_ids) do
+    for i=1,#track_ids do
       if track_ids[i] ~= nil then
         local temp = ""
         if track_names[i] ~= nil then temp = temp .. track_names[i] end
         if track_artists[i] ~= nil then temp = temp .. " by " .. track_artists[i] end
         if track_albums[i] ~= nil then temp = temp .. " - " .. track_albums[i] end
-        tracks_list:add_value(temp .. " : " .. track_ids[i], i)
+        tracks_list:add_value(vlc.strings.resolve_xml_special_chars(temp) .. " : " .. track_ids[i], i)
       end
     end
   else
